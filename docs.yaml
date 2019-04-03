@@ -15,6 +15,8 @@ info:
   license:
     name: MIT
     url: 'https://opensource.org/licenses/MIT'
+  x-logo:
+    url: https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F84ea5a08-8bbd-4a3b-b61a-cfb3e081ea56%2Fpledge.png?table=block&id=4399ef37-e1d2-4605-8123-af960858107c&width=3360&cache=v2
 tags:
   - name: Account
     description: 계정 관련
@@ -26,6 +28,8 @@ tags:
     description: 자랑하기
   - name: Chat
     description: 채팅
+
+
   - name: pet
     description: Everything about your Pets
     externalDocs:
@@ -39,6 +43,86 @@ tags:
       description: Find out more about our store
       url: 'http://swagger.io'
 paths:
+  /signup/buyer:
+    post:
+      tags:
+        - Account
+      summary: 구매자 회원 가입
+      operationId: buyerSignup
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  description: 아이디
+                  type: string
+                password:
+                  description: 비밀번호
+                  type: string
+      responses:
+        '201':
+          description: 회원가입 성공
+        '409':
+          description: 이미 있는 아이디
+  /signup/seller:
+    post:
+      tags:
+        - Account
+      summary: 판매자 회원 가입
+      operationId: sellerSignup
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  description: 아이디
+                  type: string
+                password:
+                  description: 비밀번호
+                  type: string
+      responses:
+        '201':
+          description: 회원가입 성공
+        '409':
+          description: 이미 있는 아이디
+  /signin:
+    post:
+      tags:
+      - Account
+      summary: 로그인
+      operationId: signIn
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  description: 아이디
+                  type: string
+                password:
+                  description: 비밀번호
+                  type: string
+      responses:
+        '200':
+          description: 로그인 성공
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthTokens'
+
+        '401':
+          description: 로그인 실패
+
+
+
+
+
+
   /pet:
     post:
       tags:
@@ -537,8 +621,24 @@ paths:
 externalDocs:
   description: Find out more about Swagger
   url: 'http://swagger.io'
+
 components:
   schemas:
+    AuthTokens:
+      type:
+        object
+      properties:
+        accessToken:
+          description: 액세스 토큰
+          type: string
+        refreshToken:
+          description: 리프레시 토큰
+          type: string
+
+
+
+
+
     Order:
       type: object
       properties:
