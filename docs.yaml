@@ -113,7 +113,15 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AuthTokens'
+                type:
+                  object
+                properties:
+                  accessToken:
+                    description: 액세스 토큰
+                    type: string
+                  refreshToken:
+                    description: 리프레시 토큰
+                    type: string
 
         '401':
           description: 로그인 실패
@@ -624,21 +632,6 @@ externalDocs:
 
 components:
   schemas:
-    AuthTokens:
-      type:
-        object
-      properties:
-        accessToken:
-          description: 액세스 토큰
-          type: string
-        refreshToken:
-          description: 리프레시 토큰
-          type: string
-
-
-
-
-
     Order:
       type: object
       properties:
