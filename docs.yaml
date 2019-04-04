@@ -190,6 +190,7 @@ paths:
           schema:
             type: integer
             default: 1
+
       responses:
         '200':
           description: 조회 성공
@@ -226,6 +227,13 @@ paths:
       summary: 유질물 상세조회
       operationId: pawn_retrieve
       parameters:
+        - name: Authorization
+          in: header
+          description: JWT 토큰
+          required: True
+          schema:
+            type: string
+            example: JWT <access_token>
         - name: pawn_id
           in: path
           description: 유질물 아이디
