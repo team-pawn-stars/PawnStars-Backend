@@ -122,9 +122,171 @@ paths:
                   refreshToken:
                     description: 리프레시 토큰
                     type: string
-
         '401':
           description: 로그인 실패
+
+  /pawn:
+    get:
+      tags:
+        - Pawn Buyer
+      summary: 유질물 리스트
+      operationId: pawnList
+      parameters:
+        - name: category
+          in: query
+          description: 카테고리
+          required: True
+          schema:
+            type: string
+            enum:
+              - all
+              - electronic
+              - jewel
+              - women_cloth
+              - women_goods
+              - men_cloth
+              - men_goods
+              - furniture
+              - etc
+            default: all
+        - name: sort_key
+          in: query
+          description: 정렬 기준
+          required: True
+          schema:
+            type: string
+            enum:
+              - like
+              - new
+            default: new
+        - name: region
+          in: query
+          description: 지역 (url encoding 해서 입력)
+          required: True
+          schema:
+            type: string
+            enum:
+              - 서울
+              - 광주
+              - 대구
+              - 대전
+              - 부산
+              - 울산
+              - 인천
+
+              - 강원
+              - 경기
+              - 경북
+              - 경남
+              - 전북
+              - 전남
+              - 제주
+              - 충북
+              - 충남
+        - name: page
+          in: query
+          description: 페이지 번호
+          required: True
+          schema:
+            type: integer
+            default: 1
+      responses:
+        '200':
+          description: 조회 성공
+          content:
+            application/json:
+              schema:
+                type:
+                  array
+                items:
+                  type:
+                    object
+                  properties:
+                    photo:
+                      type:
+                        string
+                      example:
+                        imange url
+                    author_id:
+                      type: string
+                      example: author id
+                    author_name:
+                      type: string
+                      example: author name
+                    title:
+                      type: string
+                      example: title
+                    post_date:
+                      type: string
+                      example: 2019-04-20 12:30
+  /pawn/<pawn_id>:
+    get:
+      tags:
+        - Pawn Buyer
+      summary: 유질물 상세조회
+      operationId: pawn_retrieve
+      parameters:
+        - name: pawn_id
+          in: path
+          description: 유질물 아이디
+          required: True
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 조회 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  photos:
+                    type: array
+                    items:
+                      type: string
+                      example: image url
+                  author_name:
+                    type: string
+                    example: author name
+                  author_id:
+                    type: string
+                    example: author id
+                  title:
+                    type: string
+                    example: title
+                  content:
+                    type: string
+                    example: content
+                  like:
+                    type: integer
+                  histories:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        date:
+                          type: string
+                          example: "2019-04-20 12:00:00"
+                        content:
+                          type: string
+                          example: history content
+                  comments:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        date:
+                          type: string
+                          example: "2019-04-20 12:00:00"
+                        content:
+                          type: string
+                          example: comment content
+                        author_name:
+                          type: string
+                          example: author name
+                        author_id:
+                          type: string
+                          example: author id
 
 
 
