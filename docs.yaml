@@ -113,8 +113,7 @@ paths:
           content:
             application/json:
               schema:
-                type:
-                  object
+                type: object
                 properties:
                   accessToken:
                     description: 액세스 토큰
@@ -203,17 +202,15 @@ paths:
           content:
             application/json:
               schema:
-                type:
-                  array
+                type: array
                 items:
-                  type:
-                    object
+                  type: object
                   properties:
+                    post_id:
+                      type: string
                     photo:
-                      type:
-                        string
-                      example:
-                        imange url
+                      type: string
+                      example: imange url
                     author_id:
                       type: string
                       example: author id
@@ -226,7 +223,7 @@ paths:
                     post_date:
                       type: string
                       example: "2019-04-20 12:30:00"
-  /pawn/<pawn_id>:
+  /pawn/<post_id>:
     get:
       tags:
         - Pawn Buyer
@@ -240,7 +237,7 @@ paths:
           schema:
             type: string
             example: JWT <access_token>
-        - name: pawn_id
+        - name: post_id
           in: path
           description: 유질물 아이디
           required: True
@@ -254,6 +251,8 @@ paths:
               schema:
                 type: object
                 properties:
+                  post_id:
+                    type: string
                   photos:
                     type: array
                     items:
@@ -301,8 +300,139 @@ paths:
                         author_id:
                           type: string
                           example: author id
+  /flex:
+    get:
+      tags:
+        - Flex
+      summary: 자랑 목록
+      operationId: flexList
+      parameters:
+        - name: sort_key
+          in: query
+          description: 정렬 기준
+          required: True
+          schema:
+            type: string
+            enum:
+              - like
+              - new
+            default: new
+        - name: page
+          in: query
+          description: 페이지 번호
+          required: True
+          schema:
+            type: integer
+            default: 1
 
+      responses:
+        '200':
+          description: 조회 성공
+          content:
+            application/json:
+              schema:
+                type:
+                  array
+                items:
+                  type:
+                    object
+                  properties:
+                    post_id:
+                      type: string
+                    pawn_price:
+                      type: string
+                      example: 30,000,000
+                    pawn_id:
+                      type: string
+                    photo:
+                      type:
+                        string
+                      example:
+                        imange url
+                    author_id:
+                      type: string
+                      example: author id
+                    author_name:
+                      type: string
+                      example: author name
+                    title:
+                      type: string
+                      example: title
+                    post_date:
+                      type: string
+                      example: "2019-04-20 12:30:00"
 
+  /flex/<post_id>:
+    get:
+      tags:
+        - Flex
+      summary: 자랑하기 상세조회
+      operationId: flex_retrieve
+      parameters:
+        - name: Authorization
+          in: header
+          description: JWT 토큰
+          required: True
+          schema:
+            type: string
+            example: JWT <access_token>
+        - name: post_id
+          in: path
+          description: 자랑하기 글 아이디
+          required: True
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 조회 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  post_id:
+                    type: string
+                  pawn_price:
+                    type: string
+                    example: 30,000,000
+                  pawn_id:
+                    type: string
+                  photos:
+                    type: array
+                    items:
+                      type: string
+                      example: image url
+                  author_name:
+                    type: string
+                    example: author name
+                  author_id:
+                    type: string
+                    example: author id
+                  title:
+                    type: string
+                    example: title
+                  content:
+                    type: string
+                    example: content
+                  like:
+                    type: integer
+                  comments:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        date:
+                          type: string
+                          example: "2019-04-20 12:00:00"
+                        content:
+                          type: string
+                          example: comment content
+                        author_name:
+                          type: string
+                          example: author name
+                        author_id:
+                          type: string
+                          example: author id
 
 
 
