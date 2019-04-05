@@ -190,6 +190,12 @@ paths:
           schema:
             type: integer
             default: 1
+        - name: query
+          in: query
+          description: 검색어
+          required: False
+          schema:
+            type: string
 
       responses:
         '200':
@@ -219,7 +225,7 @@ paths:
                       example: title
                     post_date:
                       type: string
-                      example: 2019-04-20 12:30
+                      example: "2019-04-20 12:30:00"
   /pawn/<pawn_id>:
     get:
       tags:
