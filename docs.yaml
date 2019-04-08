@@ -333,6 +333,9 @@ paths:
                   content:
                     type: string
                     example: content
+                  price:
+                    type: string
+                    example: "30,000,000"
                   like:
                     type: integer
                   histories:
