@@ -49,7 +49,7 @@ paths:
       tags:
         - Account
       summary: 구매자 회원 가입
-      operationId: buyerSignup
+      operationId: buyer_signup
       requestBody:
         content:
           application/json:
@@ -101,6 +101,13 @@ paths:
                   description: 이름
                   type: string
                   example: a전당포
+                longitude:
+                  description: 경도
+                  example: 126.661971
+                latitude:
+                  description: 위도
+                  example: 36.836192
+
       responses:
         '201':
           description: 회원가입 성공
@@ -111,7 +118,7 @@ paths:
       tags:
       - Account
       summary: 로그인
-      operationId: signIn
+      operationId: signin
       requestBody:
         content:
           application/json:
@@ -146,7 +153,7 @@ paths:
       tags:
         - Pawn Buyer
       summary: 유질물 리스트
-      operationId: pawnList
+      operationId: pawn_list
       parameters:
         - name: category
           in: query
@@ -247,7 +254,7 @@ paths:
       tags:
         - Pawn Seller
       summary: 유질물 판매 등록
-      operationId: postPawn
+      operationId: pawn_post
       parameters:
         - name: Authorization
           in: header
@@ -255,7 +262,7 @@ paths:
           required: True
           schema:
             type: string
-            example: JWT <access_token>
+            example: Bearer <access_token>
       requestBody:
         content:
           application/json:
@@ -371,7 +378,7 @@ paths:
       tags:
         - Flex
       summary: 자랑 목록
-      operationId: flexList
+      operationId: flex_ist
       parameters:
         - name: sort_key
           in: query
@@ -427,6 +434,55 @@ paths:
                     post_date:
                       type: string
                       example: "2019-04-20 12:30:00"
+    post:
+      tags:
+        - Flex
+      summary: 자랑하기 등록
+      operationId: flex_post
+      parameters:
+        - name: Authorization
+          in: header
+          description: JWT 토큰
+          required: True
+          schema:
+            type: string
+            example: Bearer <access_token>
+      requestBody:
+        content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  post_id:
+                    type: string
+                  photos:
+                    type: array
+                    items:
+                      type: string
+                      example: image url
+                  title:
+                    type: string
+                    example: title
+                  content:
+                    type: string
+                    example: content
+                  price:
+                    type: string
+                    example: "30,000,000"
+                  histories:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        date:
+                          type: string
+                          example: "2019-04-20 12:00:00"
+                        content:
+                          type: string
+                          example: history content
+      responses:
+        '201':
+          description: 성공
 
   /flex/<post_id>:
     get:
@@ -441,7 +497,7 @@ paths:
           required: True
           schema:
             type: string
-            example: JWT <access_token>
+            example: Bearer <access_token>
         - name: post_id
           in: path
           description: 자랑하기 글 아이디
