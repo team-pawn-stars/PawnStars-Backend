@@ -1,3 +1,9 @@
-from django.shortcuts import render
+from django.contrib.auth import get_user_model
+from rest_framework import viewsets, views
 
-# Create your views here.
+from . import serializers
+
+
+class BuyerUserView(viewsets.generics.CreateAPIView):
+    serializer_class = serializers.BuyerUserSerializer
+    model = get_user_model()
