@@ -28,6 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'whale.istruly.sexy',
+    '13.125.190.44',
 ]
 
 
