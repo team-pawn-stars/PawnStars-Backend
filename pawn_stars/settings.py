@@ -26,7 +26,9 @@ SECRET_KEY = os.getenv('SECRET_KEY', 's-$4zq3oi&@nmnnwq04y6=8g$wwgojeqfn$%)+=e(j
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'whale.istruly.sexy',
+]
 
 
 # Application definition
