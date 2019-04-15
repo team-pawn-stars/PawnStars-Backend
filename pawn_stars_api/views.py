@@ -7,3 +7,8 @@ from . import serializers
 class BuyerUserView(viewsets.generics.CreateAPIView):
     serializer_class = serializers.BuyerUserSerializer
     model = get_user_model()
+
+
+class SellerUserView(viewsets.generics.CreateAPIView):
+    serializer_class = serializers.SellerUserSerializer
+    model = get_user_model()
