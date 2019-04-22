@@ -39,3 +39,8 @@ class SellerUserSerializer(serializers.ModelSerializer):
 
         user.save()
         return user
+
+
+class PawnPostSerializer(serializers.ModelSerializer):
+    class Meta:
+        models = models.PawnPostModel
