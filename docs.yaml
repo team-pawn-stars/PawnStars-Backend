@@ -7,7 +7,7 @@ servers:
   - description: Dev Server
     url: https://pawn-stars.istruly.sexy
 info:
-  version: "1.0.1"
+  version: "1.0.0"
   title: Pawn-Stars
   termsOfService: 'http://swagger.io/terms/'
   contact:
@@ -250,6 +250,10 @@ paths:
                     price:
                       type: string
                       example: "30,000,000"
+                    like:
+                      type: integer
+                      example: 123
+
     post:
       tags:
         - Pawn Seller
@@ -356,23 +360,6 @@ paths:
                         content:
                           type: string
                           example: history content
-                  comments:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        date:
-                          type: string
-                          example: "2019-04-20 12:00:00"
-                        content:
-                          type: string
-                          example: comment content
-                        author_name:
-                          type: string
-                          example: author name
-                        author_id:
-                          type: string
-                          example: author id
   /flex:
     get:
       tags:
