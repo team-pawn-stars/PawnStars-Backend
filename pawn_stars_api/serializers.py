@@ -47,9 +47,15 @@ class PawnPostSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     price = serializers.CharField(max_length=256)
-    like = serializers.CharField(max_length=256)
-    author = serializers.CharField(max_length=128)
-    photo = serializers.ImageField(default='default.jpg')
+    like = serializers.CharField(max_length=256, required=False)
+    photo = serializers.ImageField(allow_null=True, required=False)
+    author = serializers.PrimaryKeyRelatedField(queryset=models.UserModel.objects.all())
+
+    def save(self, **kwargs):
+        if self.validated_data.get('photo'):
+            del self.validated_data['photo']
+        self.validated_data['like'] = 0
+        return super(PawnPostSerializer, self).save(**kwargs)
 
 
 class PawnPhotoSerializer(serializers.ModelSerializer):
@@ -57,3 +63,5 @@ class PawnPhotoSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.PawnPhotoModel
         fields = '__all__'
+
+    pawn_post = serializers.PrimaryKeyRelatedField(queryset=models.PawnPostModel.objects.all())

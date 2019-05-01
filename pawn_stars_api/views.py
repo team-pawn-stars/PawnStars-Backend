@@ -17,7 +17,7 @@ class SellerUserView(viewsets.generics.CreateAPIView):
     model = get_user_model()
 
 
-class PawnListView(viewsets.generics.ListAPIView):
+class PawnListView(viewsets.generics.ListCreateAPIView):
     serializer_class = serializers.PawnPostSerializer
     model: models.PawnPostModel = models.PawnPostModel
 
