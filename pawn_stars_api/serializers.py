@@ -43,4 +43,8 @@ class SellerUserSerializer(serializers.ModelSerializer):
 
 class PawnPostSerializer(serializers.ModelSerializer):
     class Meta:
-        models = models.PawnPostModel
+        model = models.PawnPostModel
+        fields = '__all__'
+
+    price = serializers.CharField(max_length=256)
+    like = serializers.CharField(max_length=256)

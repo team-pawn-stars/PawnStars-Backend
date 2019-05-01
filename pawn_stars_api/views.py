@@ -1,6 +1,6 @@
 from django.core.paginator import Paginator
 from django.contrib.auth import get_user_model
-from rest_framework import viewsets, views
+from rest_framework import viewsets
 
 from const import CATEGORY, SORT_KEY, REGION, PAGE, QUERY, ALL, NEW
 from exception import BadRequestException
@@ -45,6 +45,10 @@ class PawnListView(viewsets.generics.ListAPIView):
             query_set = query_set.order_by('-date')
         else:
             query_set = query_set.order_by('-like')
+
+        for post in query_set:
+            post.price = f'{post.price: ,}'
+            post.like = f'{post.like: ,}'
 
         paginator = Paginator(query_set, 20)
 
