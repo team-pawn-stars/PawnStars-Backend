@@ -11,13 +11,13 @@ class UserModel(AbstractUser):
     latitude = models.FloatField(blank=True, null=True)
 
     def __str__(self):
-        return f'{self.username} {self.name}'
+        return self.username
 
 
 class PawnPostModel(models.Model):
     post_id = models.AutoField(primary_key=True)
 
-    author = models.OneToOneField(UserModel, on_delete=models.CASCADE)
+    author = models.ForeignKey(UserModel, on_delete=models.CASCADE)
     category = models.CharField(max_length=32)
     region = models.CharField(max_length=32)
     date = models.DateField(auto_now=True)

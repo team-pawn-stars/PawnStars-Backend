@@ -48,3 +48,4 @@ class PawnPostSerializer(serializers.ModelSerializer):
 
     price = serializers.CharField(max_length=256)
     like = serializers.CharField(max_length=256)
+    author = serializers.CharField(max_length=128)

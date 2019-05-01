@@ -47,8 +47,8 @@ class PawnListView(viewsets.generics.ListAPIView):
             query_set = query_set.order_by('-like')
 
         for post in query_set:
-            post.price = f'{post.price: ,}'
-            post.like = f'{post.like: ,}'
+            post.price = f'{post.price:,}'
+            post.like = f'{post.like:,}'
 
         paginator = Paginator(query_set, 20)
 
