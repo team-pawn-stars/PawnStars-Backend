@@ -45,11 +45,16 @@ class PawnListView(viewsets.generics.ListAPIView):
             query_set = query_set.order_by('-date')
         else:
             query_set = query_set.order_by('-like')
-
         for post in query_set:
+            post.photo = models.PawnPhotoModel.objects.filter(pawn_post__post_id=post.post_id).first().photo
             post.price = f'{post.price:,}'
             post.like = f'{post.like:,}'
 
         paginator = Paginator(query_set, 20)
 
         return paginator.page(page)
+
+
+class PawnPhotoView(viewsets.generics.CreateAPIView):
+    serializer_class = serializers.PawnPhotoSerializer
+    model: models.PawnPhotoModel = models.PawnPhotoModel

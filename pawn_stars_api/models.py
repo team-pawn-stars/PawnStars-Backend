@@ -39,6 +39,7 @@ class PawnHistoryModel(models.Model):
 
 
 class PawnPhotoModel(models.Model):
-    pawn_post = models.OneToOneField(PawnPostModel, on_delete=models.CASCADE, blank=True)
+    image_id = models.AutoField(primary_key=True)
+    pawn_post = models.ForeignKey(PawnPostModel, on_delete=models.CASCADE)
     photo = models.ImageField()
 
