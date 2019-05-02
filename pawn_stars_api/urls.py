@@ -10,6 +10,7 @@ urlpatterns = [
     path('signup/seller/', views.SellerUserView.as_view()),
     path('pawn/', views.PawnListView.as_view()),
     path('pawn/image/', views.PawnPhotoView.as_view()),
+    path('pawn/history/', views.PawnHistoryView.as_view()),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

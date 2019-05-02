@@ -45,7 +45,7 @@ class PawnPostModel(models.Model):
 
 
 class PawnHistoryModel(models.Model):
-    pawn_post = models.OneToOneField(PawnPostModel, on_delete=models.CASCADE)
+    pawn_post = models.ForeignKey(PawnPostModel, on_delete=models.CASCADE)
     date = models.DateField()
     content = models.CharField(max_length=64)
 

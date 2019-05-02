@@ -60,3 +60,8 @@ class PawnListView(viewsets.generics.ListCreateAPIView):
 class PawnPhotoView(viewsets.generics.CreateAPIView):
     serializer_class = serializers.PawnPhotoSerializer
     model: models.PawnPhotoModel = models.PawnPhotoModel
+
+
+class PawnHistoryView(viewsets.generics.CreateAPIView):
+    serializer_class = serializers.PawnHistorySerializer
+    model = models.PawnHistoryModel
