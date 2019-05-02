@@ -41,7 +41,7 @@ class SellerUserSerializer(serializers.ModelSerializer):
         return user
 
 
-class PawnPostSerializer(serializers.ModelSerializer):
+class PawnPostListSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.PawnPostModel
         fields = '__all__'
@@ -62,12 +62,13 @@ class PawnPostSerializer(serializers.ModelSerializer):
         queryset=models.UserModel.objects.all()
     )
 
-    history = serializers.ListField(
-        child=serializers.PrimaryKeyRelatedField(
-            queryset=models.PawnHistoryModel.objects.all()
-        ),
-        read_only=True
-    )
+
+class PawnPostRetrieveSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.PawnPostModel
+        fields = '__all__'
+
+    histories = serializers.JSONField(read_only=True)
 
 
 class PawnHistorySerializer(serializers.Serializer):

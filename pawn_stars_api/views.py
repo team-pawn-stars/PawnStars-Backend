@@ -1,6 +1,7 @@
 from django.core.paginator import Paginator
 from django.contrib.auth import get_user_model
 from rest_framework import viewsets
+from rest_framework.response import Response
 
 from const import CATEGORY, SORT_KEY, REGION, PAGE, QUERY, ALL, NEW
 from exception import BadRequestException
@@ -18,7 +19,7 @@ class SellerUserView(viewsets.generics.CreateAPIView):
 
 
 class PawnListView(viewsets.generics.ListCreateAPIView):
-    serializer_class = serializers.PawnPostSerializer
+    serializer_class = serializers.PawnPostListSerializer
     model: models.PawnPostModel = models.PawnPostModel
 
     def get_queryset(self):
@@ -65,3 +66,19 @@ class PawnPhotoView(viewsets.generics.CreateAPIView):
 class PawnHistoryView(viewsets.generics.CreateAPIView):
     serializer_class = serializers.PawnHistorySerializer
     model = models.PawnHistoryModel
+
+
+class PawnPostRetrieveView(viewsets.generics.RetrieveDestroyAPIView):
+    serializer_class = serializers.PawnPostRetrieveSerializer
+    model = models.PawnPostModel
+    queryset = models.PawnPostModel.objects.all()
+
+    def retrieve(self, request, *args, **kwargs):
+        post = self.model.objects.filter(post_id=kwargs['pk']).first()
+        if post is None:
+            return Response(status=404)
+
+        post.histories = models.PawnHistoryModel.objects.filter(pawn_post=post).values()
+        serializer = serializers.PawnPostRetrieveSerializer(post)
+
+        return Response(serializer.data)
