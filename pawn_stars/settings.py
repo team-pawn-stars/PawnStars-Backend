@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework_jwt',
-    'pawn_stars_api',
+    'pawn_app',
+    'account_app',
 ]
 
 REST_FRAMWORK = {
@@ -119,7 +120,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTH_USER_MODEL = 'pawn_stars_api.UserModel'
+AUTH_USER_MODEL = 'account_app.UserModel'
 
 JWT_AUTH = {
     'JWT_AUTH_HEADER_PREFIX': 'Bearer',

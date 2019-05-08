@@ -1,21 +1,10 @@
 from django.core.paginator import Paginator
-from django.contrib.auth import get_user_model
 from rest_framework import viewsets
 from rest_framework.response import Response
 
 from const import CATEGORY, SORT_KEY, REGION, PAGE, QUERY, ALL, NEW
 from exception import BadRequestException
 from . import serializers, models
-
-
-class BuyerUserView(viewsets.generics.CreateAPIView):
-    serializer_class = serializers.BuyerUserSerializer
-    model = get_user_model()
-
-
-class SellerUserView(viewsets.generics.CreateAPIView):
-    serializer_class = serializers.SellerUserSerializer
-    model = get_user_model()
 
 
 class PawnListView(viewsets.generics.ListCreateAPIView):
