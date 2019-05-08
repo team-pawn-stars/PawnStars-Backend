@@ -35,3 +35,11 @@ class FlexPostListSerializer(serializers.ModelSerializer):
         allow_null=True,
         read_only=True,
     )
+
+
+class FlexPhotoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.FlexPhotoModel
+        fields = '__all__'
+
+    flex_post = serializers.PrimaryKeyRelatedField(queryset=models.FlexPostModel.objects.all())

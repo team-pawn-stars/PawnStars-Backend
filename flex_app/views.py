@@ -29,3 +29,8 @@ class FlexPostListView(viewsets.generics.ListCreateAPIView):
 
         paginator = Paginator(query_set, 20)
         return paginator.page(page)
+
+
+class FlexPhotoView(viewsets.generics.CreateAPIView):
+    serializer_class = serializers.FlexPhotoSerializer
+    model = models.FlexPhotoModel

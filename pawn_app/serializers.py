@@ -48,7 +48,6 @@ class PawnHistorySerializer(serializers.Serializer):
 
 
 class PawnPhotoSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = models.PawnPhotoModel
         fields = '__all__'
