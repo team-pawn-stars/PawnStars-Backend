@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'flex_app',
 ]
 
-REST_FRAMWORK = {
+REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
     ),

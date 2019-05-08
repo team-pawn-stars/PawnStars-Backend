@@ -20,4 +20,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('account/', include('account_app.urls')),
     path('pawn/', include('pawn_app.urls')),
+    path('flex/', include('flex_app.urls')),
 ]

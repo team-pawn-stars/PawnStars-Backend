@@ -6,4 +6,5 @@ QUERY = 'query'
 
 ALL = 'all'
 NEW = 'new'
+LIKE = 'like'
 
