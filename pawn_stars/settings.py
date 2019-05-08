@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'rest_framework_jwt',
     'pawn_app',
     'account_app',
+    'flex_app',
 ]
 
 REST_FRAMWORK = {
