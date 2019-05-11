@@ -1,5 +1,7 @@
 from django.core.paginator import Paginator
+from django.http import HttpResponse
 from rest_framework import viewsets
+from rest_framework.response import Response
 
 from const import *
 from . import models, serializers
@@ -29,6 +31,23 @@ class FlexPostListView(viewsets.generics.ListCreateAPIView):
 
         paginator = Paginator(query_set, 20)
         return paginator.page(page)
+
+
+class FlexPostRetrieveView(viewsets.generics.RetrieveDestroyAPIView):
+    serializer_class = serializers.FlexPostRetrieveSerializer
+    model = models.FlexPostModel
+    queryset = models.FlexPostModel.objects.all()
+
+    def retrieve(self, request, *args, **kwargs):
+        post = self.model.objects.filter(post_id=kwargs['pk']).first()
+        if post is None:
+            return HttpResponse(status=404)
+
+        post.comments = models.FlexCommentModel.objects.filter(flex_post=post).values()
+
+        serializer = serializers.FlexPostRetrieveSerializer(post)
+
+        return Response(serializer.data)
 
 
 class FlexPhotoView(viewsets.generics.CreateAPIView):

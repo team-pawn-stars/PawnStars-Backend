@@ -37,8 +37,16 @@ class FlexPostListSerializer(serializers.ModelSerializer):
     )
     content = serializers.CharField(
         max_length=1024,
-        write_only=True,
+        write_only=True
     )
+
+
+class FlexPostRetrieveSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.FlexPostModel
+        fields = '__all__'
+
+    comments = serializers.JSONField(read_only=True)
 
 
 class FlexPhotoSerializer(serializers.ModelSerializer):
