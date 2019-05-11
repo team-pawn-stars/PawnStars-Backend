@@ -15,14 +15,18 @@ class PawnPostListSerializer(serializers.ModelSerializer):
     like = serializers.CharField(
         max_length=256,
         default=0,
-        read_only=True
+        read_only=True,
     )
     photo = serializers.ImageField(
         allow_null=True,
-        read_only=True
+        read_only=True,
     )
     author = serializers.PrimaryKeyRelatedField(
         queryset=get_user_model().objects.all()
+    )
+    content = serializers.CharField(
+        max_length=1024,
+        write_only=True,
     )
 
 

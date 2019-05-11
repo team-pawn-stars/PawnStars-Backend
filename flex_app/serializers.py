@@ -35,6 +35,10 @@ class FlexPostListSerializer(serializers.ModelSerializer):
         allow_null=True,
         read_only=True,
     )
+    content = serializers.CharField(
+        max_length=1024,
+        write_only=True,
+    )
 
 
 class FlexPhotoSerializer(serializers.ModelSerializer):
