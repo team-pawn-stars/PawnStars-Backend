@@ -36,6 +36,10 @@ class PawnPostRetrieveSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     histories = serializers.JSONField(read_only=True)
+    photos = serializers.ListField(
+        child=serializers.ImageField(),
+        read_only=True,
+    )
 
 
 class PawnHistorySerializer(serializers.Serializer):

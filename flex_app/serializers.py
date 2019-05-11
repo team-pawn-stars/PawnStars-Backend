@@ -47,6 +47,10 @@ class FlexPostRetrieveSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     comments = serializers.JSONField(read_only=True)
+    photos = serializers.ListField(
+        child=serializers.ImageField(),
+        read_only=True,
+    )
 
 
 class FlexPhotoSerializer(serializers.ModelSerializer):

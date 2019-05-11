@@ -44,6 +44,7 @@ class FlexPostRetrieveView(viewsets.generics.RetrieveDestroyAPIView):
             return HttpResponse(status=404)
 
         post.comments = models.FlexCommentModel.objects.filter(flex_post=post).values()
+        post.photos = [photo.photo for photo in models.FlexPhotoModel.objects.filter(flex_post=post)]
 
         serializer = serializers.FlexPostRetrieveSerializer(post)
 

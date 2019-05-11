@@ -68,6 +68,7 @@ class PawnPostRetrieveView(viewsets.generics.RetrieveDestroyAPIView):
             return Response(status=404)
 
         post.histories = models.PawnHistoryModel.objects.filter(pawn_post=post).values()
+        post.photos = [photo.photo for photo in models.PawnPhotoModel.objects.filter(pawn_post=post)]
         serializer = serializers.PawnPostRetrieveSerializer(post)
 
         return Response(serializer.data)
