@@ -10,7 +10,7 @@ class PawnPostListSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     price = serializers.CharField(
-        max_length=256
+        max_length=256,
     )
     like = serializers.CharField(
         max_length=256,
@@ -22,7 +22,7 @@ class PawnPostListSerializer(serializers.ModelSerializer):
         read_only=True,
     )
     author = serializers.PrimaryKeyRelatedField(
-        queryset=get_user_model().objects.all()
+        queryset=get_user_model().objects.all(),
     )
     content = serializers.CharField(
         max_length=1024,

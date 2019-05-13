@@ -3,7 +3,6 @@ from rest_framework_jwt.views import obtain_jwt_token
 
 from . import views
 
-
 app_name = 'account'
 urlpatterns = [
     path('signin/', obtain_jwt_token),

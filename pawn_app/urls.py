@@ -4,7 +4,6 @@ from django.urls import path
 
 from . import views
 
-
 app_name = 'pawn'
 urlpatterns = [
     path('', views.PawnListView.as_view()),

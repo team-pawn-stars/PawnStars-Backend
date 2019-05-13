@@ -1,9 +1,8 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
-from . import models
-
 from pawn_app.models import PawnPostModel
+from . import models
 
 
 class FlexPostListSerializer(serializers.ModelSerializer):
@@ -37,7 +36,7 @@ class FlexPostListSerializer(serializers.ModelSerializer):
     )
     content = serializers.CharField(
         max_length=1024,
-        write_only=True
+        write_only=True,
     )
 
 
