@@ -29,3 +29,11 @@ class PawnPhotoModel(models.Model):
     image_id = models.AutoField(primary_key=True)
     pawn_post = models.ForeignKey(PawnPostModel, on_delete=models.CASCADE)
     photo = models.ImageField()
+
+
+class PawnPostLikeModel(models.Model):
+    pawn_post = models.ForeignKey(PawnPostModel, on_delete=models.CASCADE)
+    user = models.ForeignKey('account_app.UserModel', on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('pawn_post', 'user',)

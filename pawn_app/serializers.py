@@ -35,7 +35,9 @@ class PawnPostRetrieveSerializer(serializers.ModelSerializer):
         model = models.PawnPostModel
         fields = '__all__'
 
-    histories = serializers.JSONField(read_only=True)
+    histories = serializers.JSONField(
+        read_only=True,
+    )
     photos = serializers.ListField(
         child=serializers.ImageField(),
         read_only=True,
@@ -61,3 +63,19 @@ class PawnPhotoSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     pawn_post = serializers.PrimaryKeyRelatedField(queryset=models.PawnPostModel.objects.all())
+
+
+class PawnPostLikeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.PawnPostLikeModel
+        fields = '__all__'
+
+    pawn_post = serializers.PrimaryKeyRelatedField(
+        queryset=models.PawnPostModel.objects.all(),
+        write_only=True,
+    )
+
+    user = serializers.PrimaryKeyRelatedField(
+        queryset=get_user_model().objects.all(),
+        write_only=True,
+    )

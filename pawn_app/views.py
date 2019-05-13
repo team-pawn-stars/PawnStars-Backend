@@ -1,4 +1,6 @@
 from django.core.paginator import Paginator
+from django.contrib.auth import get_user_model
+
 from rest_framework import viewsets
 from rest_framework.response import Response
 
@@ -72,3 +74,28 @@ class PawnPostRetrieveView(viewsets.generics.RetrieveDestroyAPIView):
         serializer = serializers.PawnPostRetrieveSerializer(post)
 
         return Response(serializer.data)
+
+
+class PawnPostLikeView(viewsets.generics.UpdateAPIView):
+    serializer_class = serializers.PawnPostLikeSerializer
+    model = models.PawnPostLikeModel
+
+    def update(self, request, *args, **kwargs):
+        return Response(status=405)
+
+    def partial_update(self, request, *args, **kwargs):
+        user = get_user_model().objects.filter(username=request.data['user']).first()
+        like = self.model.objects.filter(user=user).first()
+        if like:
+            like.pawn_post.like -= 1
+            like.pawn_post.save()
+
+            like.delete()
+        else:
+            pawn_post = models.PawnPostModel.objects.filter(post_id=kwargs['pk']).first()
+
+            pawn_post.like += 1
+            pawn_post.save()
+            self.model(pawn_post=pawn_post, user=user).save()
+
+        return Response(status=201)
