@@ -38,6 +38,10 @@ class FlexPostListSerializer(serializers.ModelSerializer):
         max_length=1024,
         write_only=True,
     )
+    price = serializers.CharField(
+        max_length=256,
+        read_only=True,
+    )
 
 
 class FlexPostRetrieveSerializer(serializers.ModelSerializer):

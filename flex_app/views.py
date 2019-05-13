@@ -28,6 +28,7 @@ class FlexPostListView(viewsets.generics.ListCreateAPIView):
             if photo:
                 post.photo = photo.photo
             post.like = f'{post.like:,}'
+            post.price = f'{post.pawn_post.price:,}'
 
         paginator = Paginator(query_set, 20)
         return paginator.page(page)
