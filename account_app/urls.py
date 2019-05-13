@@ -8,4 +8,5 @@ urlpatterns = [
     path('signin/', obtain_jwt_token),
     path('signup/buyer/', views.BuyerUserView.as_view()),
     path('signup/seller/', views.SellerUserView.as_view()),
+    path('is_seller/<user_id>/', views.is_seller),
 ]
