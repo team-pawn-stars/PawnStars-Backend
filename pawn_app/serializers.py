@@ -42,6 +42,13 @@ class PawnPostRetrieveSerializer(serializers.ModelSerializer):
         child=serializers.ImageField(),
         read_only=True,
     )
+    liked = serializers.BooleanField(
+        read_only=True,
+    )
+    like = serializers.CharField(
+        max_length=256,
+        read_only=True,
+    )
 
 
 class PawnHistorySerializer(serializers.Serializer):

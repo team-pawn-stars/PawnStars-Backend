@@ -42,9 +42,16 @@ class FlexPostRetrieveView(viewsets.generics.RetrieveDestroyAPIView):
 
     def retrieve(self, request, *args, **kwargs):
         post = self.model.objects.filter(post_id=kwargs['pk']).first()
+        user = get_user_model().objects.filter(username=request.GET.get('username')).first()
+        like = models.FlexPostLikeModel.objects.filter(user=user, flex_post=post).first()
+
+        if user is None:
+            return Response(status=403)
         if post is None:
             return HttpResponse(status=404)
 
+        post.liked = bool(like)
+        post.like = f'{post.like:,}'
         post.comments = models.FlexCommentModel.objects.filter(flex_post=post).values()
         post.photos = [photo.photo for photo in models.FlexPhotoModel.objects.filter(flex_post=post)]
 

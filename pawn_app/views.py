@@ -66,9 +66,16 @@ class PawnPostRetrieveView(viewsets.generics.RetrieveDestroyAPIView):
 
     def retrieve(self, request, *args, **kwargs):
         post = self.model.objects.filter(post_id=kwargs['pk']).first()
+        user = get_user_model().objects.filter(username=request.GET.get('username')).first()
+        like = models.PawnPostLikeModel.objects.filter(user=user, pawn_post=post).first()
+
+        if user is None:
+            return Response(status=403)
         if post is None:
             return Response(status=404)
 
+        post.liked = bool(like)
+        post.like = f'{post.like:,}'
         post.histories = models.PawnHistoryModel.objects.filter(pawn_post=post).values()
         post.photos = [photo.photo for photo in models.PawnPhotoModel.objects.filter(pawn_post=post)]
         serializer = serializers.PawnPostRetrieveSerializer(post)
