@@ -26,7 +26,8 @@ class FlexPostListSerializer(serializers.ModelSerializer):
         queryset=PawnPostModel.objects.all(),
     )
 
-    like = serializers.IntegerField(
+    like = serializers.CharField(
+        max_length=256,
         read_only=True,
     )
 
@@ -68,3 +69,19 @@ class FlexCommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.FlexCommentModel
         fields = '__all__'
+
+
+class FlexPostLikeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.FlexPostLikeModel
+        fields = '__all__'
+
+    flex_post = serializers.PrimaryKeyRelatedField(
+        queryset=models.FlexPostModel.objects.all(),
+        write_only=True,
+    )
+
+    user = serializers.PrimaryKeyRelatedField(
+        queryset=get_user_model().objects.all(),
+        write_only=True,
+    )

@@ -1,4 +1,5 @@
 from django.core.paginator import Paginator
+from django.contrib.auth import get_user_model
 from django.http import HttpResponse
 from rest_framework import viewsets
 from rest_framework.response import Response
@@ -60,3 +61,28 @@ class FlexPhotoView(viewsets.generics.CreateAPIView):
 class FlexCommentView(viewsets.generics.CreateAPIView):
     serializer_class = serializers.FlexCommentSerializer
     model = models.FlexCommentModel
+
+
+class FlexPostLikeView(viewsets.generics.UpdateAPIView):
+    serializer_class = serializers.FlexPostLikeSerializer
+    model = models.FlexPostLikeModel
+
+    def update(self, request, *args, **kwargs):
+        return Response(status=405)
+
+    def partial_update(self, request, *args, **kwargs):
+        user = get_user_model().objects.filter(username=request.data['user']).first()
+        like = self.model.objects.filter(user=user).first()
+        if like:
+            like.flex_post.like -= 1
+            like.flex_post.save()
+
+            like.delete()
+        else:
+            flex_post = models.FlexPostModel.objects.filter(post_id=kwargs['pk']).first()
+
+            flex_post.like += 1
+            flex_post.save()
+            self.model(flex_post=flex_post, user=user).save()
+
+        return Response(status=201)

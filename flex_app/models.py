@@ -28,3 +28,11 @@ class FlexPhotoModel(models.Model):
     image_id = models.AutoField(primary_key=True)
     flex_post = models.ForeignKey(FlexPostModel, on_delete=models.CASCADE)
     photo = models.ImageField()
+
+
+class FlexPostLikeModel(models.Model):
+    flex_post = models.ForeignKey(FlexPostModel, on_delete=models.CASCADE)
+    user = models.ForeignKey('account_app.UserModel', on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('flex_post', 'user',)
