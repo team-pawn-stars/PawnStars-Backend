@@ -55,3 +55,8 @@ class FlexPostRetrieveView(viewsets.generics.RetrieveDestroyAPIView):
 class FlexPhotoView(viewsets.generics.CreateAPIView):
     serializer_class = serializers.FlexPhotoSerializer
     model = models.FlexPhotoModel
+
+
+class FlexCommentView(viewsets.generics.CreateAPIView):
+    serializer_class = serializers.FlexCommentSerializer
+    model = models.FlexCommentModel

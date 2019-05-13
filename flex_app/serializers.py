@@ -62,3 +62,9 @@ class FlexPhotoSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     flex_post = serializers.PrimaryKeyRelatedField(queryset=models.FlexPostModel.objects.all())
+
+
+class FlexCommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.FlexCommentModel
+        fields = '__all__'
