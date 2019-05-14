@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.http import HttpRequest, JsonResponse, HttpResponse
 from rest_framework import viewsets
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from . import serializers
 
@@ -15,9 +16,9 @@ class SellerUserView(viewsets.generics.CreateAPIView):
     model = get_user_model()
 
 
-def is_seller(request: HttpRequest, user_id: str):
+def is_seller(request: HttpRequest):
     if request.method == 'GET':
-        user = get_user_model().objects.filter(username=user_id).first()
+        user, _ = JSONWebTokenAuthentication().authenticate(request)
         return JsonResponse({
             'is_seller': user.is_seller,
         })

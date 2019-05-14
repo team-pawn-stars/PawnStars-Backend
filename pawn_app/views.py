@@ -1,5 +1,4 @@
 from django.core.paginator import Paginator
-from django.contrib.auth import get_user_model
 
 from rest_framework import viewsets
 from rest_framework.response import Response
@@ -66,11 +65,8 @@ class PawnPostRetrieveView(viewsets.generics.RetrieveDestroyAPIView):
 
     def retrieve(self, request, *args, **kwargs):
         post = self.model.objects.filter(post_id=kwargs['pk']).first()
-        user = get_user_model().objects.filter(username=request.GET.get('username')).first()
-        like = models.PawnPostLikeModel.objects.filter(user=user, pawn_post=post).first()
+        like = models.PawnPostLikeModel.objects.filter(user=request.user, pawn_post=post).first()
 
-        if user is None:
-            return Response(status=403)
         if post is None:
             return Response(status=404)
 
@@ -91,18 +87,19 @@ class PawnPostLikeView(viewsets.generics.UpdateAPIView):
         return Response(status=405)
 
     def partial_update(self, request, *args, **kwargs):
-        user = get_user_model().objects.filter(username=request.data['user']).first()
-        like = self.model.objects.filter(user=user).first()
+        like = self.model.objects.filter(user=request.user).first()
+        pawn_post = models.PawnPostModel.objects.filter(post_id=kwargs['pk']).first()
+
+        if pawn_post is None:
+            return Response(status=404)
         if like:
-            like.pawn_post.like -= 1
-            like.pawn_post.save()
+            pawn_post.like -= 1
+            pawn_post.save()
 
             like.delete()
         else:
-            pawn_post = models.PawnPostModel.objects.filter(post_id=kwargs['pk']).first()
-
             pawn_post.like += 1
             pawn_post.save()
-            self.model(pawn_post=pawn_post, user=user).save()
+            self.model(pawn_post=pawn_post, user=request.user).save()
 
         return Response(status=201)

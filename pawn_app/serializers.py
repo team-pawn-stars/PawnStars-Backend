@@ -23,6 +23,7 @@ class PawnPostListSerializer(serializers.ModelSerializer):
     )
     author = serializers.PrimaryKeyRelatedField(
         queryset=get_user_model().objects.all(),
+        default=serializers.CurrentUserDefault(),
     )
     content = serializers.CharField(
         max_length=1024,

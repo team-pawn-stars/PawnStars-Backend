@@ -16,6 +16,7 @@ class FlexPostListSerializer(serializers.ModelSerializer):
 
     author = serializers.PrimaryKeyRelatedField(
         queryset=get_user_model().objects.all(),
+        default=serializers.CurrentUserDefault(),
     )
 
     date = serializers.DateTimeField(
@@ -76,6 +77,11 @@ class FlexCommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.FlexCommentModel
         fields = '__all__'
+
+    author = serializers.PrimaryKeyRelatedField(
+        queryset=get_user_model().objects.all(),
+        default=serializers.CurrentUserDefault(),
+    )
 
 
 class FlexPostLikeSerializer(serializers.ModelSerializer):

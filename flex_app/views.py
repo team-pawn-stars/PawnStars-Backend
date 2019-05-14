@@ -42,10 +42,9 @@ class FlexPostRetrieveView(viewsets.generics.RetrieveDestroyAPIView):
 
     def retrieve(self, request, *args, **kwargs):
         post = self.model.objects.filter(post_id=kwargs['pk']).first()
-        user = get_user_model().objects.filter(username=request.GET.get('username')).first()
-        like = models.FlexPostLikeModel.objects.filter(user=user, flex_post=post).first()
+        like = models.FlexPostLikeModel.objects.filter(user=request.user, flex_post=post).first()
 
-        if user is None:
+        if request.user is None:
             return Response(status=403)
         if post is None:
             return HttpResponse(status=404)
@@ -78,8 +77,7 @@ class FlexPostLikeView(viewsets.generics.UpdateAPIView):
         return Response(status=405)
 
     def partial_update(self, request, *args, **kwargs):
-        user = get_user_model().objects.filter(username=request.data['user']).first()
-        like = self.model.objects.filter(user=user).first()
+        like = self.model.objects.filter(user=request.user).first()
         if like:
             like.flex_post.like -= 1
             like.flex_post.save()
@@ -90,6 +88,6 @@ class FlexPostLikeView(viewsets.generics.UpdateAPIView):
 
             flex_post.like += 1
             flex_post.save()
-            self.model(flex_post=flex_post, user=user).save()
+            self.model(flex_post=flex_post, user=request.user).save()
 
         return Response(status=201)
