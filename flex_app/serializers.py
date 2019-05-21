@@ -63,6 +63,10 @@ class FlexPostRetrieveSerializer(serializers.ModelSerializer):
         max_length=256,
         read_only=True,
     )
+    price = serializers.CharField(
+        max_length=256,
+        read_only=True
+    )
 
 
 class FlexPhotoSerializer(serializers.ModelSerializer):

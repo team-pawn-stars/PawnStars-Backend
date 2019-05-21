@@ -72,6 +72,7 @@ class PawnPostRetrieveView(viewsets.generics.RetrieveDestroyAPIView):
 
         post.liked = bool(like)
         post.like = f'{post.like:,}'
+        post.price = f'{post.price:,}'
         post.histories = models.PawnHistoryModel.objects.filter(pawn_post=post).values()
         post.photos = [photo.photo for photo in models.PawnPhotoModel.objects.filter(pawn_post=post)]
         serializer = serializers.PawnPostRetrieveSerializer(post)
