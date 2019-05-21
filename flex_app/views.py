@@ -51,7 +51,7 @@ class FlexPostRetrieveView(viewsets.generics.RetrieveDestroyAPIView):
 
         post.liked = bool(like)
         post.like = f'{post.like:,}'
-        post.price = f'{post.pawn_price.price:,}'
+        post.price = f'{post.pawn_post.price:,}'
         post.comments = models.FlexCommentModel.objects.filter(flex_post=post).values()
         post.photos = [photo.photo for photo in models.FlexPhotoModel.objects.filter(flex_post=post)]
 
