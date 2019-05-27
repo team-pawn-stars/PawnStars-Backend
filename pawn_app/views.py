@@ -48,6 +48,30 @@ class PawnListView(viewsets.generics.ListCreateAPIView):
         return paginator.page(page)
 
 
+class PawnLikeListView(viewsets.generics.ListCreateAPIView):
+    serializer_class = serializers.PawnPostListSerializer
+    model: models.PawnPostModel = models.PawnPostModel
+
+    def get_queryset(self):
+        post_ids = [like.pawn_post.post_id for like in models.PawnPostLikeModel.objects.filter(user=self.request.user)]
+
+        query_set: models.models.QuerySet = self.model.objects.filter(post_id__in=post_ids).all()
+        query_set = query_set.order_by('-date')
+
+        query_params = self.request.query_params
+        page = query_params.get(PAGE, 1)
+        for post in query_set:
+            photo = models.PawnPhotoModel.objects.filter(pawn_post=post).first()
+
+            if photo:
+                post.photo = photo.photo
+            post.price = f'{post.price:,}'
+            post.like = f'{post.like:,}'
+
+        paginator = Paginator(query_set, 20)
+        return paginator.page(page)
+
+
 class PawnPhotoView(viewsets.generics.CreateAPIView):
     serializer_class = serializers.PawnPhotoSerializer
     model: models.PawnPhotoModel = models.PawnPhotoModel
