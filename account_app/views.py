@@ -21,6 +21,7 @@ def is_seller(request: HttpRequest):
         user, _ = JSONWebTokenAuthentication().authenticate(request)
         return JsonResponse({
             'is_seller': user.is_seller,
+            'name': user.name
         })
     else:
         return HttpResponse(status=405)
